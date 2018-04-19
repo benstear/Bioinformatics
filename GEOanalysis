@@ -1,11 +1,17 @@
 
-% Ben Stear
-% Quatitative Systems Biology
+
+% Quatitative Systems Biology Project
 % Yeast Micro Array Analysis
-% 4/4/18
+
+% This is an analysis of microarray GEO data which was publicly available through NIH.
+% We attempted to reproduce results published by Zhou et al. in The metal chelating and chaperoning 
+% effects of clioquinol: insights from yeast studies.
+
+% Roughly 50% of this code was provided or had to be altered slightly. The other 50% is mine.
+
+
 
 %% Download and Parse GSE and GPL data
-
 gse = geoseriesread('/Users/dawnstear/downloads/GSE17257_series_matrix.txt');
 gpl = bmes_downloadandparsegpl('GPL2529');       
 get(gse.Data);
@@ -21,12 +27,12 @@ for i=1:numel(gse_probes)
         MAP_GSE_GPL(i)=map(gse_probes{i}); end
 end
 
+% swap the gene symbols (which dont mean anything to us) with the corresponding gene name
 gse_genes = gse_probes; %make a copy, so entries not found will keep the probe name.
 gse_genes(find(MAP_GSE_GPL)) = gpl_genes(MAP_GSE_GPL(find(MAP_GSE_GPL)));
 
 table(gse_probes(1:5), gse_genes(1:5),'VariableNames',{'gseprobe','gsegene'});
 d = d.rownames(':',gse_genes); % now replace gseprobes with gsegenes
-
 d_array = single(d); % convert to numerical array 
 
 
