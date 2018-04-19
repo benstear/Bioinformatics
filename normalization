@@ -1,5 +1,5 @@
-% Ben Stear 
-% Normalization Assignment
+
+% Preprocessing data: 4 different ways to perform Normalization 
 %
 %
 
@@ -11,8 +11,6 @@ x = [
 ];
 
 %% Mean Norm
-
-
 function MeanNorm = y1(x)
     xnew = x; % keep raw data safe
     for i = 1:size(x,2) % number of columns
@@ -24,8 +22,6 @@ end
 
 
 %% z-normalization
-
-
 function znorm = y2(x)
 
 xnew = x; % save raw data
@@ -45,8 +41,6 @@ end
 
 
 %% Quantile normalization 
-
-
 function QuantileNorm = y3(x)
 
     xsort = x;
@@ -77,8 +71,6 @@ end
 
 
 %% Rank Normalization 
-
-
 function RankNorm = y4(x)
     xnew = x;
     for i=1:size(xnew,1)
