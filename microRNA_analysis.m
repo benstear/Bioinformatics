@@ -2,9 +2,7 @@
 %
 %  MicroRNA analysis
 %
-% Analyze miRNA levels in patient w & w/o CRPS 
-% CRPS: Complex Regional Pain Syndrome
-
+% Analyze miRNA levels in patient w & w/o Complex Regional Pain Syndrome (CRPS)
 
 % Use the unfiltered Excel data.
 unfilt = xlsread('/Users/dawnstear/desktop/CRPS_unfiltered.xlsx');
@@ -13,7 +11,7 @@ numcols = size(unfilt,2);
 rows2delete = zeros(1,150);
 h = 1;
 
-% find rows with fewer than 3 numerical entries (60 or more NaNs)
+% find rows with fewer than 3 numerical entries (60 or more NaNs) so we can delete them
 for i = 1:numrows
       nancount = find(isnan(unfilt(i,:))); % count how many NaNs per row
       if length(nancount)>58  % length(nancount) == 60 || 61 means only 1 or 2 non-NaN terms
@@ -23,8 +21,8 @@ for i = 1:numrows
  end
           
  % Now delete those rows  
- unfilt2 = unfilt;
- unfilt2([rows2delete],:) = [];
+ unfilt2 = unfilt; % save original data
+ unfilt2([rows2delete],:) = []; % delete those rows
  
 numrows = size(unfilt2,1);
 rowaves = zeros(numrows,1);
@@ -50,22 +48,21 @@ end
 % Now Use the filtered Excel data.
 filt = xlsread('/Users/dawnstear/desktop/CRPS_filtered.xlsx');
 
-% I found overall average for each control sample...^^
+% Find column average for each control sample
 MammU6  = filt(87,:); 
 RNU48   = filt(96,:); 
 RNU48_2 = filt(225,:);
 RNU44   = filt(184,:); 
 RNU44_2 = filt(280,:);
-controls = [88,97,226,185,281] - 1; % subtract by 1 b/c row #'s are shifted
-colaves = [1,size(filt,2)];         % up 1 in matlab matrix compared to .xlsx file 
+controls = [88,97,226,185,281] - 1; % subtract by 1 b/c row #'s are shifted up 1 in matlab matrix compared to .xlsx file 
+colaves = [1,size(filt,2)];         
 
 for i=1:size(filt,2) % #cols = (61)
     colaves(i) = sum((filt(controls,i)))/numel(controls); % calculate average of controls for each col
 end
                                                                                                                                         
-% Should I instead find the average of these 5 values for every column?
-% CT0 = (MammU6_ave + RNU44_ave + RNU44_ave2 + RNU48_ave + RNU48_ave2)/5; %scalar
-filtnorm = filt-colaves;  % normalized deltaCT values
+ % normalized deltaCT values
+filtnorm = filt-colaves; 
 
 
 % low ct value = highly expressed
@@ -74,11 +71,12 @@ filtnorm = filt-colaves;  % normalized deltaCT values
 
 % mean(A,2) = average by each row, here, rows = miRNAA; so we find ave. of
 % each miRNA expression level. these are average deltaCT's for each respective group
-filtControls  = mean(filt(:,1:20),2); % must account for rnu44 and rnu48?  exclude them????
+filtControls  = mean(filt(:,1:20),2); 
 filtCRPS      = mean(filt(:,21:61),2);
 
 % deltadeltaCT = filtControls - filtCRPS
-ddCT = filtControls - filtCRPS;  %  filtCRPS - filtControls ???????
+ddCT = filtControls - filtCRPS;  
+
 % Calculate 2^-deltadeltaCT, which are the fold change values.
 ddCT_fc = 2.^(-ddCT); 
 
@@ -91,11 +89,6 @@ end
 
 index = find(ddCT_fc> 2.2755); % get index of top10 highest fold changes
 toptenfc = ddCT_fc(index);     % and use them to get the actual fc vals
-
-
-
-
-
 
 
 % Find p-values
@@ -111,18 +104,12 @@ p_value = [22.1963e-003; 46.0825e-003; 18.7397e-003; 7.0276e-003;...
 
 % create table with miRNA name, fold changes and p-vals       
 microRNA = table(miRNAs,Fold_Change,p_value);
+
 % sort by p-value (3rd column)
 microRNA = sortrows(microRNA,3);
 
-
-
-
-
-
-
-
-
-
+% Now use targetscan.org to find mRNA targets of these microRNA. 
+% Then use DAVID to perform gene enrichment and functional annotation
 
 
 
