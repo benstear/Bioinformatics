@@ -1,16 +1,23 @@
 
 % Ben Stear                             %
 %                                       %
-% QSB RNAseq assignment      5/4/18     %
-% Dr. Sacan                             %
+% RNA sequence analysis                 %
 %                                       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% yeast type: saccharomyces cerevisiae 
-% genbank ncbi BY4741
+%{
+In this analysis we looked at RNA sequencing data. The data was read from the sequencer into fastq file format. 
+We used Burrows Wheeler Alignment to first index the yeast reference genome using the command $ bwa index ref.fa .
 
-% dbp2-mutant: SRR1302792
-% wild type:   SRR1302790
+yeast type: saccharomyces cerevisiae 
+genbank ncbi BY4741
+
+dbp2-mutant: SRR1302792
+wild type:   SRR1302790
+
+File pipeline:
+.fastq --> .SAM --> .txt --> .m
+%}
 
 
 %% BWA
