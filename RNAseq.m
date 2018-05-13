@@ -1,10 +1,12 @@
 
 % Ben Stear                             %
 %                                       %
-% QSB RNAseq assignment      5/4/18     %
-% Dr. Sacan                             %
+% QSB RNAseq analysis        5/4/18     %                            
 %                                       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% In this analysis we looked at RNA sequencing data. The data was read from the sequencer into fastq file format. 
+% We used Burrows Wheeler Alignment to first index the yeast reference genome using the command $ bwa index ref.fa .
 
 % yeast type: saccharomyces cerevisiae 
 % genbank ncbi BY4741
