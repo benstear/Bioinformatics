@@ -9,6 +9,8 @@
 In this analysis we looked at RNA sequencing data. The data was read from the sequencer into fastq file format. 
 We used Burrows Wheeler Alignment to first index the yeast reference genome using the command $ bwa index ref.fa .
 
+Paper the code is based on: Regulation of Glucose-Dependent Gene Expression by the RNA Helicase Dbp2 in Saccharomyces cerevisiae
+
 yeast type: saccharomyces cerevisiae 
 genbank ncbi BY4741
 
