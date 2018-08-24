@@ -1,0 +1,12 @@
+
+rule all:
+    input:
+            "cc/catdog.txt"
+rule combine:
+    input:
+            "catfile.txt",
+            "dogfile.txt"
+    output:
+            "cc/catdog.txt"
+    shell:
+            "cat {input} > {output}"
